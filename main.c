@@ -62,18 +62,20 @@ void pixel(int x,int y, int c)                  //draw a pixel at x/y with rgb
 void movePlayer()
 {
  //move up, down, left, right
- if(K.a ==1 && K.m==0){P.a-=4; if (P.a< 0){ P.a +=360}}  
- if(K.d ==1 && K.m==0){ printf("right\n");}
- if(K.w ==1 && K.m==0){ printf("up\n");}
- if(K.s ==1 && K.m==0){ printf("down\n");}
+ if(K.a ==1 && K.m==0){P.a-=4; if (P.a< 0){ P.a +=360;}}  
+ if(K.d ==1 && K.m==0){P.a+=4; if (P.a> 359){P.a -=360;}}
+ int dx=M.sin[P.a]*10.0;
+ int dy=M.cos[P.a]*10.0;
+ if(K.w ==1 && K.m==0){ P.x+=dx; P.y+=dy;}
+ if(K.s ==1 && K.m==0){ P.x-=dx; P.y-=dy;}
  //strafe left, right
- if(K.sr==1){ printf("strafe left\n");}
- if(K.sl==1){ printf("strafe right\n");}
+ if(K.sr==1){ P.x+=dy; P.y+=dx;}
+ if(K.sl==1){ P.x-=dy; P.y-=dx;}
  //move up, down, look up, look down
- if(K.a==1 && K.m==1){ printf("look up\n");}
- if(K.d==1 && K.m==1){ printf("look down\n");}
- if(K.w==1 && K.m==1){ printf("move up\n");}
- if(K.s==1 && K.m==1){ printf("move down\n");}
+ if(K.a==1 && K.m==1){ P.l-=1;}
+ if(K.d==1 && K.m==1){ P.l+=1;}
+ if(K.w==1 && K.m==1){ P.z-=4;}
+ if(K.s==1 && K.m==1){ P.z+=4;}
 }
 
 void clearBackground() 
@@ -84,7 +86,6 @@ void clearBackground()
  }	
 }
 
-int tick;
 void draw3D()
 {int x,y,c=0;
  for(y=0;y<SH2;y++)
